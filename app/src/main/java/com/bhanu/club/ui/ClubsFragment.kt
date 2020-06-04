@@ -3,6 +3,8 @@ package com.bhanu.club.ui
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -64,6 +66,21 @@ class ClubsFragment : Fragment() {
         binding.sortBy.setOnClickListener {
             showSortByPopUp()
         }
+
+        binding.searchEdt.addTextChangedListener(object: TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                adapter.filter.filter(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+        })
     }
     private fun showSortByPopUp(){
         val popupWindow = PopupWindow(requireContext())
@@ -74,7 +91,6 @@ class ClubsFragment : Fragment() {
             isFocusable = true
             elevation = 4.0f
         }
-        val sortRg:RadioGroup = layout.findViewById(R.id.sort_rg)
         val ascendingRb:RadioButton = layout.findViewById(R.id.ascending)
         val descending:RadioButton = layout.findViewById(R.id.descending)
 

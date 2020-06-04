@@ -2,6 +2,8 @@ package com.bhanu.club.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.transform.CircleCropTransformation
@@ -16,8 +18,9 @@ import kotlin.collections.ArrayList
  * Created by Bhanu Prakash Pasupula on 04,Jun-2020.
  * Email: pasupula1995@gmail.com
  */
-class ClubsAdapter:RecyclerView.Adapter<ClubsAdapter.ViewHolder>() {
+class ClubsAdapter:RecyclerView.Adapter<ClubsAdapter.ViewHolder>(),Filterable {
     private var clubList = ArrayList<Club>()
+    private var originalClubList = ArrayList<Club>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClubsAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -45,6 +48,7 @@ class ClubsAdapter:RecyclerView.Adapter<ClubsAdapter.ViewHolder>() {
     fun updateClubs(list:ArrayList<Club>){
         clubList.clear()
         clubList.addAll(list)
+        originalClubList = list
         notifyDataSetChanged()
     }
     fun sortByAscending(){
@@ -80,6 +84,36 @@ class ClubsAdapter:RecyclerView.Adapter<ClubsAdapter.ViewHolder>() {
                     "favorite"
                 }
             }
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object :Filter(){
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                clubList = if (constraint?.isNullOrEmpty()!!){
+                    originalClubList
+                }else {
+                    val tempList = ArrayList<Club>()
+                    for (company in originalClubList) {
+                        if (company.company.toLowerCase().contains(constraint.toString().toLowerCase())) {
+                            tempList.add(company)
+                        }
+                    }
+                    tempList
+                }
+
+
+                val filteredResults = FilterResults()
+                filteredResults.values = clubList
+
+                return filteredResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                clubList = results?.values as ArrayList<Club>
+                notifyDataSetChanged()
+            }
+
         }
     }
 }

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Club</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorite">Favorite</string>
+    <string name="follow">Follow</string>
+    <string name="sort">Sort</string>
+    <string name="search_by_company_name">search by company name</string>
+    <string name="descending">descending.</string>
+    <string name="ascending">ascending</string>
+</resources>

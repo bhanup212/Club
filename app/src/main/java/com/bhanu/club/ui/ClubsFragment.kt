@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -45,9 +46,14 @@ class ClubsFragment : Fragment(),ClubsAdapter.ClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModels()
-        viewModel.getClubs()
+        fetchClubs()
         setClubsRv()
         clickListeners()
+    }
+    private fun fetchClubs(){
+        if (viewModel.clubs.value == null){
+            viewModel.getClubs()
+        }
     }
     private fun observeViewModels(){
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
@@ -55,6 +61,9 @@ class ClubsFragment : Fragment(),ClubsAdapter.ClickListener {
         })
         viewModel.clubs.observe(viewLifecycleOwner, Observer {
                 updateClubList(it)
+        })
+        viewModel.errorMsg.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(requireContext(),it,Toast.LENGTH_SHORT).show()
         })
     }
     private fun setClubsRv(){

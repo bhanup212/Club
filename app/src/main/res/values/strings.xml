@@ -6,10 +6,11 @@
     <string name="follow">Follow</string>
     <string name="sort">Sort</string>
     <string name="search_by_company_name">search by company name</string>
-    <string name="descending">descending.</string>
+    <string name="descending">descending</string>
     <string name="ascending">ascending</string>
     <string name="sort_by_name">Sort by name</string>
     <string name="sort_by_age">Sort by age</string>
     <string name="mobile">mobile</string>
     <string name="email">Email</string>
+    <string name="search_by_member_name">search by member name</string>
 </resources>

@@ -32,6 +32,8 @@ data class Club(
         data class Name(
             val first:String,
             val last:String
-        ):Parcelable
+        ):Parcelable{
+            fun fullName() = first+last
+        }
     }
 }

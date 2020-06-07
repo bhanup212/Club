@@ -14,9 +14,9 @@ import com.bhanu.club.model.Club
  * Created by Bhanu Prakash Pasupula on 07,Jun-2020.
  * Email: pasupula1995@gmail.com
  */
-class MembersAdapter(private val members:ArrayList<Club.Member>):RecyclerView.Adapter<MembersAdapter.ViewHolder>(),Filterable {
+class MembersAdapter(private val originalMembers:ArrayList<Club.Member>):RecyclerView.Adapter<MembersAdapter.ViewHolder>(),Filterable {
 
-    private var filteredMembers = members
+    private var members = originalMembers
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MembersAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -25,11 +25,11 @@ class MembersAdapter(private val members:ArrayList<Club.Member>):RecyclerView.Ad
     }
 
     override fun getItemCount(): Int {
-       return filteredMembers.size
+       return members.size
     }
 
     override fun onBindViewHolder(holder: MembersAdapter.ViewHolder, position: Int) {
-       val member = filteredMembers[position]
+       val member = members[position]
         holder.bindData(member)
 
         holder.binding.favoriteMem.setOnClickListener {
@@ -57,7 +57,7 @@ class MembersAdapter(private val members:ArrayList<Club.Member>):RecyclerView.Ad
         }
     }
     fun sortByName(isAscending:Boolean=true){
-        filteredMembers = if (isAscending){
+        members = if (isAscending){
             ArrayList(members.sortedBy { it.name.first })
         }else{
             ArrayList(members.sortedByDescending { it.name.first })
@@ -66,7 +66,7 @@ class MembersAdapter(private val members:ArrayList<Club.Member>):RecyclerView.Ad
     }
 
     fun sortByAge(isAscending:Boolean=true){
-        filteredMembers = if (isAscending){
+        members = if (isAscending){
             ArrayList(members.sortedBy { it.age })
         }else{
             ArrayList(members.sortedByDescending { it.age })
@@ -75,6 +75,32 @@ class MembersAdapter(private val members:ArrayList<Club.Member>):RecyclerView.Ad
     }
 
     override fun getFilter(): Filter {
-        TODO("Not yet implemented")
+        return object :Filter(){
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                members = if (constraint?.isNullOrEmpty()!!){
+                    originalMembers
+                }else {
+                    val tempList = ArrayList<Club.Member>()
+                    for (member in originalMembers) {
+                        if (member.name.fullName().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                            tempList.add(member)
+                        }
+                    }
+                    tempList
+                }
+
+
+                val filteredResults = FilterResults()
+                filteredResults.values = members
+
+                return filteredResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                members = results?.values as ArrayList<Club.Member>
+                notifyDataSetChanged()
+            }
+
+        }
     }
 }

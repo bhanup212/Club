@@ -36,7 +36,7 @@ class ClubViewModel(private val apiClient: ApiClient):ViewModel() {
                 _isLoading.postValue(false)
             }catch (e:UnknownHostException){
                 _isLoading.postValue(false)
-                _errorMsg.postValue(e.message)
+                _errorMsg.postValue("No internet connection. Please try again")
             } catch (e: Exception) {
                 Log.e("TAG","error: ${e.message}")
                 _isLoading.postValue(false)

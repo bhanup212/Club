@@ -14,6 +14,7 @@ import android.widget.PopupWindow
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -34,6 +35,16 @@ class ClubsFragment : Fragment(),ClubsAdapter.ClickListener {
     private lateinit var adapter: ClubsAdapter
 
     private var selectedSort = -1
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this, Callback())
+    }
+    inner class Callback : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            activity?.finish()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

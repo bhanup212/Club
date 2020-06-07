@@ -13,7 +13,9 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bhanu.club.R
 import com.bhanu.club.databinding.FragmentClubsBinding
 import com.bhanu.club.model.Club
@@ -23,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_clubs.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
-class ClubsFragment : Fragment() {
+class ClubsFragment : Fragment(),ClubsAdapter.ClickListener {
 
     private val viewModel:ClubViewModel by sharedViewModel()
 
@@ -49,7 +51,7 @@ class ClubsFragment : Fragment() {
     }
     private fun observeViewModels(){
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
-
+            binding.progressbar.isVisible=it
         })
         viewModel.clubs.observe(viewLifecycleOwner, Observer {
                 updateClubList(it)
@@ -57,7 +59,9 @@ class ClubsFragment : Fragment() {
     }
     private fun setClubsRv(){
         adapter = ClubsAdapter()
+        adapter.setListener(this)
         binding.clubsRv.adapter = adapter
+        binding.clubsRv.setHasFixedSize(true)
     }
     private fun updateClubList(list:List<Club>){
         adapter.updateClubs(list as ArrayList<Club>)
@@ -116,5 +120,10 @@ class ClubsFragment : Fragment() {
             1 -> ascendingRb.isChecked = true
             2 -> descending.isChecked = true
         }
+    }
+
+    override fun onClick(club: Club) {
+        val navDir = ClubsFragmentDirections.actionClubFragmentToClubMemberFragment(club)
+        findNavController().navigate(navDir)
     }
 }

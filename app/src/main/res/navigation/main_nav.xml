@@ -29,11 +29,19 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" >
+
+
+        </action>
+
     </fragment>
     <fragment
         android:id="@+id/clubMemberFragment"
         android:name="com.bhanu.club.ui.ClubMembersFragment"
         android:label="club_member_fragment"
-        tools:layout="@layout/fragment_club_members" />
+        tools:layout="@layout/fragment_club_members" >
+        <argument
+            android:name="club"
+            app:argType="com.bhanu.club.model.Club" />
+    </fragment>
 </navigation>

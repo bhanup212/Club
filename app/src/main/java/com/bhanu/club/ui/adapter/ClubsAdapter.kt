@@ -21,6 +21,7 @@ import kotlin.collections.ArrayList
 class ClubsAdapter:RecyclerView.Adapter<ClubsAdapter.ViewHolder>(),Filterable {
     private var clubList = ArrayList<Club>()
     private var originalClubList = ArrayList<Club>()
+    private lateinit var listener: ClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClubsAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -44,6 +45,10 @@ class ClubsAdapter:RecyclerView.Adapter<ClubsAdapter.ViewHolder>(),Filterable {
             club.isFollowing = !club.isFollowing
             notifyItemChanged(position)
         }
+
+        holder.binding.rootCv.setOnClickListener {
+            listener.onClick(club)
+        }
     }
     fun updateClubs(list:ArrayList<Club>){
         clubList.clear()
@@ -60,6 +65,10 @@ class ClubsAdapter:RecyclerView.Adapter<ClubsAdapter.ViewHolder>(),Filterable {
         notifyDataSetChanged()
     }
 
+    fun setListener(listener: ClickListener){
+        this.listener=listener
+    }
+
     inner class ViewHolder(val binding: CompanyRowItemBinding):RecyclerView.ViewHolder(binding.root){
 
         fun bindData(club: Club){
@@ -71,7 +80,7 @@ class ClubsAdapter:RecyclerView.Adapter<ClubsAdapter.ViewHolder>(),Filterable {
                     transformations(CircleCropTransformation())
                 }
                 companyDesc.text = club.about
-
+                memberSize.text = "${club.members.size} members"
                 follow.text = if (club.isFollowing){
                     "unfollow"
                 }else{
@@ -115,5 +124,9 @@ class ClubsAdapter:RecyclerView.Adapter<ClubsAdapter.ViewHolder>(),Filterable {
             }
 
         }
+    }
+
+    interface ClickListener{
+        fun onClick(club: Club)
     }
 }

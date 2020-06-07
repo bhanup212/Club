@@ -8,4 +8,6 @@
     <string name="search_by_company_name">search by company name</string>
     <string name="descending">descending.</string>
     <string name="ascending">ascending</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_age">Sort by age</string>
 </resources>

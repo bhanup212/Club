@@ -19,8 +19,8 @@ class ClubViewModel(private val apiClient: ApiClient):ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _clubs = MutableLiveData<List<Club>>()
-    val clubs:LiveData<List<Club>> = _clubs
+    private val _clubs = MutableLiveData<ArrayList<Club>>()
+    val clubs:LiveData<ArrayList<Club>> = _clubs
 
     fun getClubs(){
 

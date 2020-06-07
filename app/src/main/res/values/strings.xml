@@ -10,4 +10,6 @@
     <string name="ascending">ascending</string>
     <string name="sort_by_name">Sort by name</string>
     <string name="sort_by_age">Sort by age</string>
+    <string name="mobile">mobile</string>
+    <string name="email">Email</string>
 </resources>

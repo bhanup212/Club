@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
  */
 interface ApiClient {
     @GET("/api/json/get/Vk-LhK44U")
-    suspend fun getClubs(): List<Club>
+    suspend fun getClubs(): ArrayList<Club>
 
 
     companion object {

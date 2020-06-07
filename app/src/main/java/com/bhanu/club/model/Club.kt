@@ -17,7 +17,7 @@ data class Club(
     val about:String,
     var isFollowing:Boolean=false,
     var isFavorite:Boolean=false,
-    val members:List<Member>
+    val members:ArrayList<Member>
 ) : Parcelable {
     @Parcelize
     data class Member(
